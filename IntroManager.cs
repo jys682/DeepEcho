@@ -74,7 +74,8 @@ namespace DeepEchoGame
             Console.WriteLine($"선체 내구도: {_hp}");
             Console.WriteLine($"비상 전력  : {_power}");
             Console.WriteLine("==================================================");
-            Console.WriteLine("[LOG] 불 킨 해치: ");
+            Console.WriteLine("[LOG] 불 켜진 캠: ");
+            Console.WriteLine("[LOG] 음파 활성화된 캠: ");
         }
 
         public int SonarConsole()

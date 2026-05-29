@@ -1,35 +1,52 @@
-﻿using DeepEchoGame;
-using System.Security.Cryptography.X509Certificates;
+﻿using System;
+using System.Collections.Generic;
 
-public class SpawnMonster
+namespace DeepEchoGame
 {
-    private Random random = new Random();
-
-    public Monster Spawn()
+    public class MonsterSpawner
     {
-        int monsterType = random.Next(0, 4); //몹은 숫자에 따라 결정
+        private static readonly Random random = new Random();
 
-        Monster spawnedMonster = null; //지역 변수 초기화
-
-        switch (monsterType)
+        public List<Monster> Spawn(int turn)
         {
-            case 0: //0 = 청새치
-                spawnedMonster = new Spearfish();
-                break;
+            List<Monster> spawnedMonsters = new List<Monster>();
 
-            case 1: //1 = 레비아탄
-                spawnedMonster = new Leviathan();
-                break;
+            int spawnCount = 1;
 
-            case 2://2 = 세이렌
-                spawnedMonster = new Siren();
-                break;
+            if (turn >= 4 && turn <= 6)
+                spawnCount = 2;
+            else if (turn >= 7)
+                spawnCount = 3;
 
-            case 3: //3 = 창백한 고래
-                spawnedMonster = new PaleWhale();
-                break;
+            for (int i = 0; i < spawnCount; i++)
+            {
+                spawnedMonsters.Add(CreateRandomMonster());
+            }
+
+            return spawnedMonsters;
         }
 
-        return spawnedMonster;
+        private Monster CreateRandomMonster()
+        {
+            int monsterType = random.Next(0, 4);
+
+            switch (monsterType)
+            {
+                case 0:
+                    return new Siren();
+
+                case 1:
+                    return new PaleWhale();
+
+                case 2:
+                    return new Anglerfish();
+
+                case 3:
+                    return new GiantSquid();
+
+                default:
+                    return new Anglerfish();
+            }
+        }
     }
 }

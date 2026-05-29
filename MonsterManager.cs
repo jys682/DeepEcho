@@ -1,36 +1,94 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Security.Cryptography.X509Certificates;
 using System.Text;
 
 namespace DeepEchoGame
 {
-    public class MonsterManager
+    public class MonsterManager //리스트 몬스터 다 죽으면 턴 체크
     {
-        public void spawn()
+        private readonly MonsterSpawner spawner;
+        private List<Monster> monsterList;
+        private Random ran;
+        private readonly Map _map;
+        private int turn = 0;
+        private int ranPosition;
+        private int ranCam;
+
+        public MonsterManager(Map map)
         {
-            List<Monster> monsters = new List<Monster>();
-            SpawnMonster spawner = new SpawnMonster();
-            Random ran = new Random();
-            Map map = new Map();
+            this.spawner = new MonsterSpawner();
+            this.monsterList = spawner.Spawn(turn);
+            this.ran = new Random();
+            this._map = map;
 
-            monsters.Add(new Spearfish());
-            monsters.Add(new Leviathan());
-            monsters.Add(new Siren());
-            monsters.Add(new PaleWhale());
-            int ranPosition = ran.Next(0, 4);
+            this.ranPosition = ran.Next(1, 6);
+            this.ranCam = ran.Next(1, 6);
+        }
 
-            Monster m = spawner.Spawn();
+        public int Turn
+        {
+            get { return turn; }
+        }
 
-            foreach (Monster i in monsters)
+        public void SpawnMonster(Map _map, Submarine _sub)
+        {
+            foreach (Monster i in monsterList)
             {
-                if (i.Name == m.Name)
-                {
-                    map.MonsterIn(ranPosition);
-                    break;
-                }
-
+                i.Position = ranPosition;
             }
+        }
 
+        public void MoveMonsters(Map _map, Submarine _sub)
+        {
+            do
+            {
+                turn++;
+                SpawnMonster(_map, _sub);
+            }
+            while (monsterList.Count == 0);
+
+            for (int i = monsterList.Count - 1; i >= 0; i--)
+            {
+                var m = monsterList[i];
+                bool isTurnComplete = false; 
+
+                while (!isTurnComplete)
+                {
+                    Zone cam = _map.FindZone(ranCam);
+
+                    if (m.Position > 1)
+                    {
+                        m.Move(); 
+                    }
+                    else 
+                    {
+                        if (cam.Light == true)
+                        {
+                            m.Position = ranPosition;
+                            isTurnComplete = true;
+                        }
+                        else if (cam.SonicWave == true)
+                        {
+                            monsterList.Remove(m);
+                            isTurnComplete = true;
+                        }
+                        else
+                        {
+                            m.UseAbility();
+                            _sub.damage(m.AttackPower);
+                            monsterList.Remove(m);
+                            isTurnComplete = true;
+                        }
+                    }
+                }
+            }
+        }
+
+        public List<Monster> MonsterLiveCheck()
+        {
+            monsterList.RemoveAll(m => !m.IsAlive);
+            return monsterList;
         }
     }
 }

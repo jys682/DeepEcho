@@ -4,38 +4,41 @@ using System.Text;
 
 namespace DeepEchoGame
 {
-    class Zone
+    public class Zone
     {
         private string name;
-        private List<Zone> connectedZones;
         private bool hasMonster;
+        private bool light;
+        private bool sonicWave;
 
         public string Name
         {
             get { return name; }
             private set { name = value; }
         }
-        public List<Zone> ConnectedZones
-        {
-            get { return connectedZones; }
-            private set { connectedZones = value; }
-        }
+
         public bool HasMonster
         {
             get { return hasMonster; }
             private set { hasMonster = value; }
         }
+        public bool Light
+        {
+            get { return light; }
+            private set { light = value; }
+        }
+        public bool SonicWave
+        {
+            get { return sonicWave; }
+            private set { sonicWave = value; }
+        }
 
         public Zone(string name) //생성 시 zone 정의
         {
             this.Name = name;
-            this.ConnectedZones = new List<Zone>();
             this.HasMonster = false;
-        }
-
-        public void Connect(Zone name) //생성 시 zone 연결
-        {
-            ConnectedZones.Add(name);
+            this.Light = false;
+            this.SonicWave = false;
         }
 
         public void MonsterIn() //zone에 몬스터 생김
@@ -46,6 +49,26 @@ namespace DeepEchoGame
         public void MonsterOut() //zone에 몬스터 사라짐
         {
             HasMonster = false;
+        }
+
+        public void turnOnLight() //zone에 몬스터 생김
+        {
+            Light = true;
+        }
+
+        public void turnOffLight() //zone에 몬스터 생김
+        {
+            Light = false;
+        }
+
+        public void sonicWaveOn() //zone에 몬스터 생김
+        {
+            SonicWave = true;
+        }
+
+        public void sonicWaveOff() //zone에 몬스터 생김
+        {
+            SonicWave = false;
         }
     }
 }
