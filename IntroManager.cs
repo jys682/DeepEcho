@@ -66,7 +66,7 @@ namespace DeepEchoGame
 
         }
 
-        public void PowerConsole(int _turn, int _hp, int _power) // 임의 로직 나중에 값 연동
+        public void PowerConsole(int _turn, int _hp, int _power) 
         {
             Console.WriteLine("==================================================");
             Console.WriteLine($"[DEEP ECHO - 제어 콘솔]\tTURN: {_turn}/10");
@@ -119,7 +119,7 @@ namespace DeepEchoGame
             Thread.Sleep(2000);
             Console.WriteLine(".");
             Thread.Sleep(2000);
-            Console.WriteLine("[SYSTEM] 외부 도킹 신호 감지. 구조선 '아틀라스 호'가 도착했습니다.");
+            TypeMessage("[SYSTEM] 외부 도킹 신호 감지. 구조선 '아틀라스 호'가 도착했습니다.",70);
             Thread.Sleep(2000);
             TypeMessage("\n\"치이익-- 대장님! 제어실 해치를 개방합니다. 무사하셨군요!\"",70);
             Console.WriteLine("\n암흑 같던 제어실 창밖으로 구조선의 강렬한 서치라이트 빛이 쏟아져 들어옵니다.");
@@ -144,7 +144,7 @@ namespace DeepEchoGame
             Thread.Sleep(2000);
             Console.WriteLine(".");
             Thread.Sleep(2000);
-            Console.WriteLine("[SYSTEM] 비상 배터리가 완전히 방전되었습니다. 모든 시스템이 다운됩니다.");
+            TypeMessage("[SYSTEM] 비상 배터리가 완전히 방전되었습니다. 모든 시스템이 다운됩니다.",70);
             Thread.Sleep(2000);
             TypeMessage("\n탁.탁.탁...\n", 200);
             Thread.Sleep(2000);
@@ -171,7 +171,7 @@ namespace DeepEchoGame
             Thread.Sleep(2000);
             Console.WriteLine(".");
             Thread.Sleep(2000);
-            Console.WriteLine("[CRITICAL] 선체 장갑 파손율 100%. 수압 제어 불가..");
+            TypeMessage("[CRITICAL] 선체 장갑 파손율 100%. 수압 제어 불가..",70);
             Thread.Sleep(2000);
             TypeMessage("\n쩌적... 콰르르릉!\n", 200);
             Thread.Sleep(2000);

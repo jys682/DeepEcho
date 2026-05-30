@@ -13,11 +13,10 @@
             Sonar sonar = new Sonar(map);
             MonsterManager monster = new MonsterManager(map);
             PlayerManager player = new PlayerManager(map);
-
             int cameraChoice = 0;
-
+            Zone cam = map.FindZone(cameraChoice);
             //input.PlayIntro();
-            
+
             while (!gameOver)
             {
                 input.PowerConsole(monster.Turn, submarine.Hp, submarine.Power);
@@ -28,18 +27,21 @@
                     case "1":
                         cameraChoice = input.SonarConsole();
                         sonar.Scan(cameraChoice);
+                        if(cam.Light == true)
+                        {
+                            submarine.UsePower(Submarine.light);
+                        }
                         break;
                     case "2":
                         cameraChoice = input.SonarConsole();
-                        player.Depend();
+                        player.Depend(cameraChoice);
                         break;
                     default:
-                        Console.WriteLine("\n잘못된 입력입니다. 다시 시도해주세요.");
+                        Console.WriteLine("\n잘못된 입력입니다. 다시 입력해주세요.");
                         return;
                 }
-                cameraChoice = 0;
-
                 monster.MoveMonsters(map, submarine);
+                cameraChoice = 0;
 
                 gameOver = player.ending(submarine);
             }

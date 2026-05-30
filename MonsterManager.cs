@@ -10,17 +10,17 @@ namespace DeepEchoGame
         private readonly MonsterSpawner spawner;
         private List<Monster> monsterList;
         private Random ran;
-        private readonly Map _map;
+        private readonly Map map;
         private int turn = 0;
         private int ranPosition;
         private int ranCam;
 
-        public MonsterManager(Map map)
+        public MonsterManager(Map _map)
         {
             this.spawner = new MonsterSpawner();
             this.monsterList = spawner.Spawn(turn);
             this.ran = new Random();
-            this._map = map;
+            this.map = _map;
 
             this.ranPosition = ran.Next(1, 6);
             this.ranCam = ran.Next(1, 6);
@@ -55,7 +55,7 @@ namespace DeepEchoGame
 
                 while (!isTurnComplete)
                 {
-                    Zone cam = _map.FindZone(ranCam);
+                    Zone cam = _map.FindZone(ranCam);  //ㄱㅊ한거?
 
                     if (m.Position > 1)
                     {
@@ -65,6 +65,7 @@ namespace DeepEchoGame
                     {
                         if (cam.Light == true)
                         {
+                            m.Attack(true);
                             m.Position = ranPosition;
                             isTurnComplete = true;
                         }
@@ -76,6 +77,7 @@ namespace DeepEchoGame
                         else
                         {
                             m.UseAbility();
+                            m.Attack(false);
                             _sub.damage(m.AttackPower);
                             monsterList.Remove(m);
                             isTurnComplete = true;
@@ -83,12 +85,6 @@ namespace DeepEchoGame
                     }
                 }
             }
-        }
-
-        public List<Monster> MonsterLiveCheck()
-        {
-            monsterList.RemoveAll(m => !m.IsAlive);
-            return monsterList;
         }
     }
 }
