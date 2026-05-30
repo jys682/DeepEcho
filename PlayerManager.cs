@@ -7,87 +7,106 @@ namespace DeepEchoGame
     public class PlayerManager
     {
         private readonly Map map;
-        private readonly IntroManager input;
-        private readonly MonsterManager monster;
-        private readonly MainProgram mainProgram;
+        private readonly MonsterManager monsterMgr;
+        public bool sonicAttackSuccess { get; set; }
 
-        public PlayerManager()
+        public PlayerManager(Map _map, MonsterManager _monsterMgr)
         {
-            this.map = mainProgram.map;
-            this.input = mainProgram.input;
-            this.monster = mainProgram.monster;
-            this.mainProgram = mainProgram;
+            this.map = _map;
+            this.monsterMgr = _monsterMgr;
         }
-        public void Depend(int playercam)
+        public void Depend(int playercam, Submarine submarine)
         {
-            Submarine submarine = new Submarine();
             bool roop = false;
-            Zone cam = map.Zones[playercam];
+            Zone cam = map.Zones[playercam-1];
 
-            Console.WriteLine("어떤 방어 행동을 할까? (1. 불 키기, 2. 불 끄기, 3. 음파 공격)\t숫자 입력 :");
-            int choose = int.Parse(Console.ReadLine());
-
-            while(!roop)
+            while (!roop)
             {
+                Console.Write("\n어떤 방어 행동을 할까? (1. 불 키기, 2. 불 끄기, 3. 음파 공격)\n숫자 입력 :");
+                if (!int.TryParse(Console.ReadLine(), out int choose))
+                {
+                    Console.WriteLine("[ERROR] 다시 입력해 주세요\n");
+                    continue;
+                }
                 switch (choose)
                 {
                     case 1:
                         if (cam.Light == true)
                         {
-                            Console.WriteLine("이미 불이 켜져있습니다.");
-                            submarine.UsePower(Submarine.light);
-                            return;
-                        }
-                        map.TurnOnLight(playercam);
-                        submarine.UsePower(Submarine.light);
-                        roop = true;
-                        break;
-                    case 2:
-                        if (cam.Light == false)
-                        {
-                            Console.WriteLine("이미 불이 꺼져있습니다.");
-                            return;
-                        }
-                        map.TurnOffLight(playercam);
-                        roop = true;
-                        break;
-                    case 3:
-                        map.SonicWaveOn(playercam);
-
-                        if (cam.HasMonster == true)
-                        {
-                            Console.WriteLine("음파 공격이 적중했습니다!");
-                            map.SonicWaveOff(playercam);
+                            Console.WriteLine($"[{cam.Name}] 이미 불이 켜져있습니다.");
+                            continue;
                         }
                         else
                         {
-                            Console.WriteLine("음파 공격이 빗나갔습니다.");
-                            map.SonicWaveOff(playercam);
+                            Console.WriteLine($"[{cam.Name}] 불을 켰습니다.");
+                            map.TurnOnLight(playercam);
+                            roop = true;
+                            break;
                         }
-                        submarine.UsePower(Submarine.sonic);
-                        roop = true;
+                    case 2:
+                        if (cam.Light == false)
+                        {
+                            Console.WriteLine($"[{cam.Name}] 이미 불이 꺼져있습니다.");
+                            continue;
+                        }
+                        else
+                        {
+                            Console.WriteLine($"[{cam.Name}] 불을 껐습니다.");
+                            map.TurnOffLight(playercam);
+                            roop = true;
+                            break;
+                        }
+                    case 3:
+                        map.SonicWaveOn(playercam);
+                        foreach (Monster m in monsterMgr.monsterList)
+                        {
+                            if (m.Position == 1 && cam.HasMonster)
+                            {
+                                Console.WriteLine($"[{cam.Name}] 음파 공격이 적중했습니다!");
+                                sonicAttackSuccess = true;
+                                break;
+                            }
+                        }
+                        if(sonicAttackSuccess == true)
+                        {
+                            map.SonicWaveOff(playercam);
+                            submarine.UsePower(Submarine.sonic);
+                            roop = true;
+                        }
+                        else
+                        {
+                            Console.WriteLine($"[{cam.Name}] 음파 공격이 빗나갔습니다.");
+                            sonicAttackSuccess = false;
+                            map.SonicWaveOff(playercam);
+                            submarine.UsePower(Submarine.sonic);
+                            roop = true;
+                        }
                         break;
                     default:
+                        Console.WriteLine("[ERROR] 다시 입력해 주세요\n");
                         break;
                 }
             }
         }
 
-        public bool ending(Submarine submarine)
+        public bool ending(Submarine submarine, IntroManager input)
         {
             if (submarine.Hp <= 0)
             {
                 input.HpDownEnding();
+                return true;
             }
             else if (submarine.Power <= 0)
             {
                 input.PowerDownEnding();
+                return true;
             }
-            else if (monster.Turn >= 10)
+            else if (monsterMgr.Turn >= 10)
             {
                 input.TrueEnding();
+                return true;
             }
-            return true;
+            return false;
         }
     }
 }

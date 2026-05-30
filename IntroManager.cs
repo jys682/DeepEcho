@@ -16,7 +16,7 @@ namespace DeepEchoGame
         }
         public void PlayIntro()
         {
-            Console.WriteLine("=== Deep Echo ===\n\n");
+            Console.WriteLine("\n\n=== Deep Echo ===\n\n");
             Console.WriteLine("계속하려면 아무 키나 누르세요...");
             Console.ReadKey();
             Console.WriteLine("==================================================");
@@ -46,7 +46,6 @@ namespace DeepEchoGame
             Thread.Sleep(2000);
             Console.WriteLine(".");
 
-            Console.Clear();
             Console.WriteLine("==================================================");
             Console.WriteLine(" [비상 전력 가동] SYSTEM REBOOT COMPLETE.");
             Console.WriteLine("==================================================");
@@ -80,14 +79,13 @@ namespace DeepEchoGame
             Console.Write($"[LOG] 불 켜진 캠: ");
         }
 
-        public int SonarConsole()
+        public int SonarConsole(Map _map)
         {
             Console.WriteLine("\n[LOG] 행동 가동 준비");
             Console.WriteLine(".");
             Thread.Sleep(1000);
             Console.WriteLine(".");
             Thread.Sleep(1000);
-            Console.Clear();
             Console.WriteLine(@"       ┌───────┐       ");
             Console.WriteLine(@"       │ cam1  │       ");
             Console.WriteLine(@"       └───────┘       ");
@@ -106,11 +104,19 @@ namespace DeepEchoGame
             Console.WriteLine(@"       ┌───────┐       ");
             Console.WriteLine(@"       │ cam4  │       ");
             Console.WriteLine(@"       └───────┘       ");
+            while (true)
+            {
+                Console.Write("\n어떤 카메라를 고를까? cam_ \n숫자만 입력 :");
+                bool success = int.TryParse(Console.ReadLine(), out int choose);
+                Zone zon = _map.FindZone(choose);
 
-            Console.Write("\n어떤 카메라를 고를까? cam_ \n숫자만 입력 :");
-            int answer = int.Parse(Console.ReadLine());
-            return answer;
-
+                if (zon == null)
+                {
+                    Console.WriteLine("\n[ERROR] 존재하지 않는 구역입니다. 다시 입력해주세요");
+                    continue;
+                }
+                return choose;
+            }
         }
 
         public void TrueEnding()

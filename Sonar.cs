@@ -17,13 +17,6 @@ namespace DeepEchoGame
         {
             Zone target = map.FindZone(index);
 
-            // 못 찾았을 때
-            if (target == null)
-            {
-                Console.WriteLine("\n존재하지 않는 구역입니다. 다시 시도해 주세요.");
-                return;
-            }
-
             // 찾았을 때 출력
             Console.WriteLine("=== 소나 스캔 ===");
 

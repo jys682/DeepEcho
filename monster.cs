@@ -7,6 +7,7 @@ namespace DeepEchoGame
         public string Name { get; protected set; }
         public int AttackPower { get; protected set; }
         public int Position { get; set; }
+        public int monsterCam { get; set; }
         public bool IsAlive { get; set; } = true;
 
         protected const int MinPosition = 1;

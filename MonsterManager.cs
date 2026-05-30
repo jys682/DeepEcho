@@ -7,87 +7,90 @@ namespace DeepEchoGame
 {
     public class MonsterManager //리스트 몬스터 다 죽으면 턴 체크
     {
-        private readonly MainProgram mainProgram;
         private readonly Map map;
+        private PlayerManager playerManager;
         private readonly MonsterSpawner spawner;
-
-        private List<Monster> monsterList;
+        public List<Monster> monsterList;
         private Random ran;
         private int turn = 0;
-        private int ranPosition;
-        private int ranCam;
+        private bool comeReady = false;
 
-        public MonsterManager()
+        public MonsterManager(Map _map)
         {
-            this.map = mainProgram.map;
+            this.map = _map;
             this.spawner = new MonsterSpawner();
 
             this.monsterList = spawner.Spawn(turn);
             this.ran = new Random();
-            this.ranPosition = ran.Next(1, 6);
-            this.ranCam = ran.Next(1, 6);
         }
 
-        public int Turn
+        public int Turn {get { return turn; }}
+        public void SetPlayerManager(PlayerManager _playerManager)
         {
-            get { return turn; }
+            this.playerManager = _playerManager;
         }
-
         public void SpawnMonster(Map _map, Submarine _sub)
         {
-            foreach (Monster i in monsterList)
-            {
-                i.Position = ranPosition;
-            }
-        }
-
-        public void MoveMonsters(Map _map, Submarine _sub)
-        {
-            do
+            if (monsterList.Count == 0)
             {
                 turn++;
-                SpawnMonster(_map, _sub);
-            }
-            while (monsterList.Count == 0);
+                monsterList = spawner.Spawn(turn);
 
+                foreach (Monster i in monsterList)
+                {
+                    i.Position = ran.Next(1, 6);
+                    i.monsterCam = ran.Next(0, 5);
+                }
+            }
+        }
+        public void MoveMonsters(Map _map, Submarine _sub)
+        {
+            SpawnMonster(_map, _sub);
             for (int i = monsterList.Count - 1; i >= 0; i--)
             {
                 var m = monsterList[i];
-                bool isTurnComplete = false; 
+                Zone cam = _map.Zones[m.monsterCam];  
 
-                while (!isTurnComplete)
+                if (m.Position > 1)
                 {
-                    Zone cam = _map.Zones[ranCam];  
+                    map.MonsterIn(m.monsterCam);
+                    m.Move();
+                    ///////////////
+                    Console.WriteLine("{0} moved to position {1}.", m.Name, m.Position);
+                }
+                else
+                {
+                    if(comeReady == false)
+                    {
+                        Console.WriteLine($"[WARNING]{m.Name}이(가) 함선 앞까지 다가왔다");
+                        comeReady = true;
+                        continue;
+                    }
+                    if (cam.Light == true)
+                    {
+                        m.Attack(true);
+                        m.Position = ran.Next(3, 6);
+                        map.MonsterOut(m.monsterCam);
+                        Console.WriteLine($"[{cam.Name}] {m.Name}이(가) 불빛을 보고 후퇴했습니다!\n");
+                        comeReady = false;
+                    }
+                    else if (playerManager.sonicAttackSuccess == true)
+                    {
+                        monsterList.Remove(m);
+                        map.MonsterOut(m.monsterCam);
+                        Console.WriteLine($"[{cam.Name}] {m.Name}이(가) 음파를 맞고 처치되었습니다!\n");
+                        playerManager.sonicAttackSuccess = false;
+                        comeReady = false;
+                    }
+                    else
+                    {
+                        m.Attack(false);
+                        _sub.damage(m.AttackPower);
+                        monsterList.Remove(m);
+                        map.MonsterOut(m.monsterCam);
+                        comeReady = false;
+                    }
 
-                    if (m.Position > 1)
-                    {
-                        m.Move(); 
-                    }
-                    else 
-                    {
-                        map.MonsterIn(ranCam);
-                        if (cam.Light == true)
-                        {
-                            m.Attack(true);
-                            m.Position = ranPosition;
-                            map.MonsterOut(ranCam);
-                            isTurnComplete = true;
-                        }
-                        else if (cam.SonicWave == true)
-                        {
-                            monsterList.Remove(m);
-                            map.MonsterOut(ranCam);
-                            isTurnComplete = true;
-                        }
-                        else
-                        {
-                            m.Attack(false);
-                            _sub.damage(m.AttackPower);
-                            monsterList.Remove(m);
-                            map.MonsterOut(ranCam);
-                            isTurnComplete = true;
-                        }
-                    }
                 }
             }
         }
