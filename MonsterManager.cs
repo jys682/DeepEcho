@@ -7,21 +7,23 @@ namespace DeepEchoGame
 {
     public class MonsterManager //리스트 몬스터 다 죽으면 턴 체크
     {
+        private readonly MainProgram mainProgram;
+        private readonly Map map;
         private readonly MonsterSpawner spawner;
+
         private List<Monster> monsterList;
         private Random ran;
-        private readonly Map map;
         private int turn = 0;
         private int ranPosition;
         private int ranCam;
 
-        public MonsterManager(Map _map)
+        public MonsterManager()
         {
+            this.map = mainProgram.map;
             this.spawner = new MonsterSpawner();
+
             this.monsterList = spawner.Spawn(turn);
             this.ran = new Random();
-            this.map = _map;
-
             this.ranPosition = ran.Next(1, 6);
             this.ranCam = ran.Next(1, 6);
         }
@@ -55,7 +57,7 @@ namespace DeepEchoGame
 
                 while (!isTurnComplete)
                 {
-                    Zone cam = _map.FindZone(ranCam);  //ㄱㅊ한거?
+                    Zone cam = _map.Zones[ranCam];  
 
                     if (m.Position > 1)
                     {
@@ -63,23 +65,26 @@ namespace DeepEchoGame
                     }
                     else 
                     {
+                        map.MonsterIn(ranCam);
                         if (cam.Light == true)
                         {
                             m.Attack(true);
                             m.Position = ranPosition;
+                            map.MonsterOut(ranCam);
                             isTurnComplete = true;
                         }
                         else if (cam.SonicWave == true)
                         {
                             monsterList.Remove(m);
+                            map.MonsterOut(ranCam);
                             isTurnComplete = true;
                         }
                         else
                         {
-                            m.UseAbility();
                             m.Attack(false);
                             _sub.damage(m.AttackPower);
                             monsterList.Remove(m);
+                            map.MonsterOut(ranCam);
                             isTurnComplete = true;
                         }
                     }

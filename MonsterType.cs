@@ -26,17 +26,12 @@ namespace DeepEchoGame
             Console.WriteLine($"{Name}의 위치 신호가 불안정하다...");
         }
 
-        public override void UseAbility()
-        {
-            Console.WriteLine($"{Name}이 불규칙한 음파로 소나 신호를 흔든다.");
-        }
+
     }
 
     // 2. 창백한 고래
     public class PaleWhale : Monster
     {
-        private const int HullDamage = 25;
-
         public PaleWhale()
         {
             Name = "창백한 고래";
@@ -54,11 +49,7 @@ namespace DeepEchoGame
             Console.WriteLine($"{Name}의 거대한 그림자가 천천히 다가온다...");
         }
 
-        public override void UseAbility()
-        {
-            Console.WriteLine($"{Name}이 선체를 압박한다!");
-            Console.WriteLine($"선체 내구도 {HullDamage} 감소!");
-        }
+
     }
 
     // 3. 심해 아귀
@@ -71,10 +62,17 @@ namespace DeepEchoGame
             IsAlive = true;
         }
 
-        public override void UseAbility()
+        public override void Move()
         {
-            Console.WriteLine($"{Name}이 희미한 빛으로 플레이어를 혼란시킨다.");
+            Position--;
+
+            if (Position < MinPosition)
+                Position = MinPosition;
+
+            Console.WriteLine($"{Name}의 초롱 불빛이 점멸하며 다가온다...");
         }
+
+
     }
 
     // 4. 거대 오징어
@@ -87,9 +85,16 @@ namespace DeepEchoGame
             IsAlive = true;
         }
 
-        public override void UseAbility()
+        public override void Move()
         {
-            Console.WriteLine($"{Name}이 먹물을 뿌려 시야를 방해한다.");
+            Position--;
+
+            if (Position < MinPosition)
+                Position = MinPosition;
+
+            Console.WriteLine($"{Name}의 여러 촉수들이 점점 조여온다...");
         }
+
+
     }
 }

@@ -60,7 +60,10 @@ namespace DeepEchoGame
             TypeMessage("\n[SONAR] ...치익... 치지직... 외부 구역에서 이상 음파 포착.", 70);
             TypeMessage("\n[SONAR] 거대한 생물체가 탐사선을 향해 접근 중입니다.", 70);
             Thread.Sleep(2500);
-            Console.WriteLine("\n\n구조대가 오기 전까지 시스템을 제어해 살아남으십시오.\n\n");
+            Console.WriteLine("\n\n구조대가 오기 전까지 시스템을 제어해 살아남으십시오.");
+            Console.WriteLine("\n* 소나 스캔은 캠을 탐색하여 몬스터의 위치를 파악하는 데 사용됩니다.");
+            Console.WriteLine("\n* 불을 켜서 캠에 몬스터가 가까이 오면 밀어낼 수 있습니다");
+            Console.WriteLine("\n* 음파 공격을 통해 몬스터를 처치할 수 있습니다");
             Console.WriteLine("계속하려면 아무 키나 누르세요...");
             Console.ReadKey();
 
@@ -74,8 +77,7 @@ namespace DeepEchoGame
             Console.WriteLine($"선체 내구도: {_hp}");
             Console.WriteLine($"비상 전력  : {_power}");
             Console.WriteLine("==================================================");
-            Console.WriteLine("[LOG] 불 켜진 캠: ");
-            Console.WriteLine("[LOG] 음파 활성화된 캠: ");
+            Console.Write($"[LOG] 불 켜진 캠: ");
         }
 
         public int SonarConsole()

@@ -4,27 +4,27 @@ using System.Text;
 
 namespace DeepEchoGame
 {
-    internal class PlayerManager
+    public class PlayerManager
     {
         private readonly Map map;
         private readonly IntroManager input;
         private readonly MonsterManager monster;
         private readonly MainProgram mainProgram;
 
-        public PlayerManager(Map _map)
+        public PlayerManager()
         {
-            this.map = _map;
-            this.input = new IntroManager();
-            this.monster = new MonsterManager(_map);
-            this.mainProgram = new MainProgram();
+            this.map = mainProgram.map;
+            this.input = mainProgram.input;
+            this.monster = mainProgram.monster;
+            this.mainProgram = mainProgram;
         }
         public void Depend(int playercam)
         {
             Submarine submarine = new Submarine();
             bool roop = false;
-            Zone cam = map.FindZone(playercam);
+            Zone cam = map.Zones[playercam];
 
-            Console.WriteLine("어떤 방어 행동을 할까? (1. 불 키기, 2. 불 끄기, 3. 음파공격)\t숫자 입력 :");
+            Console.WriteLine("어떤 방어 행동을 할까? (1. 불 키기, 2. 불 끄기, 3. 음파 공격)\t숫자 입력 :");
             int choose = int.Parse(Console.ReadLine());
 
             while(!roop)

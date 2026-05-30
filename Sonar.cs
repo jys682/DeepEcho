@@ -4,7 +4,7 @@ using System.Text;
 
 namespace DeepEchoGame
 {
-    class Sonar
+    public class Sonar
     {
         private Map map;
 

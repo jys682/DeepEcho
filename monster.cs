@@ -36,17 +36,9 @@ namespace DeepEchoGame
 
         public virtual void HitBySonicAttack()
         {
-            Position++;
-
-            if (Position > MaxPosition)
-                Position = MaxPosition;
-
-            Console.WriteLine($"{Name}이 음파 공격을 받고 뒤로 밀려났다!");
+            Console.WriteLine($"{Name}이 음파 공격을 받고 쓰러졌다!");
         }
 
-        public virtual void UseAbility()
-        {
-            Console.WriteLine($"{Name}은 특별한 행동을 하지 않았다.");
-        }
+
     }
 }

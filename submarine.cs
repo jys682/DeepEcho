@@ -1,11 +1,11 @@
 public class Submarine
 {
     private int hp = 100;
-    private int power = 100;
+    private int power = 300;
 
-    public const int scan = 3;
-    public const int light = 8;
-    public const int sonic = 10;
+    public const int scan = 5;
+    public const int light = 10;
+    public const int sonic = 13;
 
     public int Hp { get { return hp; } }
     public int Power { get { return power; } }
