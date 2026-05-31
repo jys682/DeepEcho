@@ -57,6 +57,11 @@ namespace DeepEchoGame
                             break;
                         }
                     case 3:
+                        if (submarine.Hp < 13)
+                        {
+                            Console.WriteLine("[WARNING] 음파 공격을 할 만큼 전력이 남아있지 않다 ");
+                            continue;
+                        }
                         map.SonicWaveOn(playercam);
                         foreach (Monster m in monsterMgr.monsterList)
                         {
@@ -96,12 +101,12 @@ namespace DeepEchoGame
                 input.HpDownEnding();
                 return true;
             }
-            else if (submarine.Power <= 0)
+            else if (submarine.Power < 5)
             {
                 input.PowerDownEnding();
                 return true;
             }
-            else if (monsterMgr.turn >= 10)
+            else if (monsterMgr.Turn >= 10)
             {
                 input.TrueEnding();
                 return true;

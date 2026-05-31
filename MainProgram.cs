@@ -27,13 +27,15 @@
             Submarine submarine = new Submarine();
             Zone cam;
             int cameraChoice = 0;
-            //input.PlayIntro();
+
+            input.PlayIntro();
 
             while (!gameOver)
             {
-                input.PowerConsole(main.monster.turn, submarine.Hp, submarine.Power);
+                input.PowerConsole(main.monster.Turn, submarine.Hp, submarine.Power);
                 main.LightOnCam();
                 main.LightOnCamPrint();
+                main.monster.SpawnMonster(main.map, submarine);
                 Console.Write("\n어떤 행동을 할까? (1. 소나 스캔, 2. 방어 행동)\n숫자 입력 :");
                 bool success = int.TryParse(Console.ReadLine(), out int choose);
                 switch (choose)
@@ -41,10 +43,16 @@
                     case 1:
                         cameraChoice = input.SonarConsole(main.map, main.sonar);
                         main.sonar.Scan(cameraChoice);
+                        submarine.UsePower(Submarine.scan);
                         cam = main.map.Zones[cameraChoice - 1];
                         main.LightOnCheck(submarine);
                         break;
                     case 2:
+                        if(submarine.Hp < 10)
+                        {
+                            Console.WriteLine("[WARNING] 방어 행동을 할 만큼 전력이 남아있지 않다 ");
+                            continue;
+                        }
                         cameraChoice = input.SonarConsole(main.map, main.sonar);
 
                         main.player.Depend(cameraChoice, submarine);

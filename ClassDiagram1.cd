@@ -1,0 +1,134 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="DeepEchoGame.Map" Collapsed="true">
+    <Position X="7" Y="3.5" Width="1.5" />
+    <AssociationLine Name="zones" Type="DeepEchoGame.Zone" ManuallyRouted="true">
+      <Path>
+        <Point X="7.625" Y="4.062" />
+        <Point X="7.625" Y="5.218" />
+        <Point X="9.5" Y="5.218" />
+      </Path>
+    </AssociationLine>
+    <TypeIdentifier>
+      <HashCode>IAEAAAAAAAAgAAAAAAIEEAACAABAAAAAAEAAAAAAAAA=</HashCode>
+      <FileName>Map.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsCollectionAssociation>
+      <Field Name="zones" />
+    </ShowAsCollectionAssociation>
+  </Class>
+  <Class Name="DeepEchoGame.MainProgram" Collapsed="true">
+    <Position X="7" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AgAAEAAAAAAAAAAAAAAAAAAAAAAAAAABAACABAIAAJA=</HashCode>
+      <FileName>MainProgram.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Field Name="map" />
+      <Field Name="monster" />
+      <Field Name="player" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="DeepEchoGame.IntroManager" Collapsed="true">
+    <Position X="12.25" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAwAAAAEAAAAAAAAAABAAAAAAAABAAAAAIAABAA=</HashCode>
+      <FileName>IntroManager.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DeepEchoGame.PlayerManager" Collapsed="true">
+    <Position X="9.5" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAEAAAAAAAAAAEAAAAAAAAAAAAAAAAAAQAAAQAQAA=</HashCode>
+      <FileName>PlayerManager.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DeepEchoGame.Sonar" Collapsed="true">
+    <Position X="9.5" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Sonar.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Field Name="map" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="DeepEchoGame.Zone" Collapsed="true">
+    <Position X="9.5" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>UAAAAABAAAAAAAAAIAAEEoQAAAKUAAAAAAAAACAAAAA=</HashCode>
+      <FileName>Zone.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DeepEchoGame.Monster" Collapsed="true">
+    <Position X="4.5" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AQAAAAAAAIAIAAAgAAAICAQAAIgAAAAAAAgAAAAAAAA=</HashCode>
+      <FileName>monster.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DeepEchoGame.Siren" Collapsed="true">
+    <Position X="1.5" Y="6.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAIAAAAAAAAAAAAAAAAAAAAAAAAQAAAAAAAA=</HashCode>
+      <FileName>MonsterType.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DeepEchoGame.PaleWhale" Collapsed="true">
+    <Position X="3.5" Y="6.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>MonsterType.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DeepEchoGame.Anglerfish" Collapsed="true">
+    <Position X="5.5" Y="6.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>MonsterType.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DeepEchoGame.GiantSquid" Collapsed="true">
+    <Position X="7.5" Y="6.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>MonsterType.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DeepEchoGame.MonsterSpawner" Collapsed="true">
+    <Position X="2" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAgAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAQAAAAAAAA=</HashCode>
+      <FileName>random.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Field Name="random" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="DeepEchoGame.MonsterManager" Collapsed="true">
+    <Position X="4.5" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAFAAIBAAAAAIAAAASAAAAAAAAAEAQEAAAAAABAAA=</HashCode>
+      <FileName>MonsterManager.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Field Name="map" />
+      <Field Name="spawner" />
+    </ShowAsAssociation>
+    <ShowAsCollectionAssociation>
+      <Field Name="monsterList" />
+    </ShowAsCollectionAssociation>
+  </Class>
+  <Class Name="Submarine" Collapsed="true">
+    <Position X="12.25" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>EAAAAAAAAAAAgAAAABAAAEAAAAMAAAABAABAAAAEQAA=</HashCode>
+      <FileName>submarine.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="System.Random" Collapsed="true">
+    <Position X="2" Y="4.75" Width="1.5" />
+    <TypeIdentifier />
+  </Class>
+  <Font Name="맑은 고딕" Size="9" />
+</ClassDiagram>

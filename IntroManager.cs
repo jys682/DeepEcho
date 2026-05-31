@@ -24,10 +24,10 @@ namespace DeepEchoGame
             Console.WriteLine(" 소속: 심해 탐사선 'Deep Echo' 제어실");
             Console.WriteLine(" 직책: 탐사 대장 (플레이어)");
             Console.WriteLine("==================================================");
-            Thread.Sleep(4000);
+            Thread.Sleep(3000);
             Console.WriteLine("\n[SYSTEM] 현재 자율 항해 시스템 정상 구동 중...");
             Console.WriteLine("[SYSTEM] 선체 압력 안정적. 외부 기온 2도.");
-            Thread.Sleep(4000);
+            Thread.Sleep(3000);
             Console.WriteLine("\n[RADIO] \"대장님, 샘플 채취 완료했습니다. 이제 복귀하...\"");
             Thread.Sleep(2000);
             Console.ForegroundColor = ConsoleColor.Red;
@@ -51,10 +51,10 @@ namespace DeepEchoGame
             Console.WriteLine("==================================================");
             Thread.Sleep(2000);
             TypeMessage("\n[WARNING] 주 엔진 파손. 자가 발전 불가.", 70);
-            TypeMessage("\n[SYSTEM] 비상 전력 모드로 전환합니다. (남은 전력: 100%)", 70);
+            TypeMessage("\n[SYSTEM] 비상 전력 모드로 전환합니다. (남은 전력: 300%)", 70);
             TypeMessage("\n[SYSTEM] 산소 공급 장치 정상 작동 중...", 70);
             TypeMessage("\n구조대 도착까지 남은 시간...", 70);
-            TypeMessage("6시간", 200);
+            TypeMessage("10시간", 200);
             Thread.Sleep(2000);
             TypeMessage("\n[SONAR] ...치익... 치지직... 외부 구역에서 이상 음파 포착.", 70);
             TypeMessage("\n[SONAR] 거대한 생물체가 탐사선을 향해 접근 중입니다.", 70);
@@ -63,7 +63,7 @@ namespace DeepEchoGame
             Console.WriteLine("\n* 소나 스캔은 캠을 탐색하여 몬스터의 위치를 파악하는 데 사용됩니다.");
             Console.WriteLine("\n* 불을 켜서 캠에 몬스터가 가까이 오면 밀어낼 수 있습니다");
             Console.WriteLine("\n* 음파 공격을 통해 몬스터를 처치할 수 있습니다");
-            Console.WriteLine("계속하려면 아무 키나 누르세요...");
+            Console.WriteLine("계속하려면 아무 키나 누르세요...\n\n\n");
             Console.ReadKey();
 
         }
@@ -71,7 +71,7 @@ namespace DeepEchoGame
         public void PowerConsole(int _turn, int _hp, int _power) 
         {
             Console.WriteLine("==================================================");
-            Console.WriteLine($"[DEEP ECHO - 제어 콘솔]\tTURN: {_turn}/10");
+            Console.WriteLine($"[DEEP ECHO - 제어 콘솔]\t Time: {_turn}/10");
             Console.WriteLine("==================================================");
             Console.WriteLine($"선체 내구도: {_hp}");
             Console.WriteLine($"비상 전력  : {_power}");

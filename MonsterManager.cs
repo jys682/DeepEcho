@@ -12,7 +12,7 @@ namespace DeepEchoGame
         private readonly MonsterSpawner spawner;
         public List<Monster> monsterList;
         private Random ran;
-        public int turn = 0;
+        private int turn = 0;
         private bool comeReady = false;
 
         public MonsterManager(Map _map)
@@ -21,6 +21,7 @@ namespace DeepEchoGame
             this.spawner = new MonsterSpawner();
             this.ran = new Random();
         }
+        public int Turn {get { return turn; }}
         public void SetPlayerManager(PlayerManager _playerManager)
         {
             this.playerManager = _playerManager;
@@ -41,7 +42,6 @@ namespace DeepEchoGame
         }
         public void MoveMonsters(Map _map, Submarine _sub)
         {
-            SpawnMonster(_map, _sub);
             for (int idx = 1; idx <= _map.Zones.Count; idx++)
             {
                 _map.MonsterOut(idx);
