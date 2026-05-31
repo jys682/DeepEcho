@@ -5,6 +5,7 @@
         public Map map;
         public MonsterManager monster;
         public PlayerManager player;
+        public Sonar sonar;
 
         private List<Zone> ligthOnCam = new List<Zone>();
 
@@ -14,6 +15,7 @@
             this.monster = new MonsterManager(map);
             this.player = new PlayerManager(map, monster);
             this.monster.SetPlayerManager(this.player);
+            this.sonar = new Sonar(map);
         }
         static bool gameOver = false;
         static void Main(string[] args)
@@ -22,15 +24,14 @@
 
             MainProgram main = new MainProgram();
             IntroManager input = new IntroManager();
-            Sonar sonar = new Sonar(main.map);
             Submarine submarine = new Submarine();
-            int cameraChoice = 0;
             Zone cam;
+            int cameraChoice = 0;
             //input.PlayIntro();
 
             while (!gameOver)
             {
-                input.PowerConsole(main.monster.Turn, submarine.Hp, submarine.Power);
+                input.PowerConsole(main.monster.turn, submarine.Hp, submarine.Power);
                 main.LightOnCam();
                 main.LightOnCamPrint();
                 Console.Write("\n어떤 행동을 할까? (1. 소나 스캔, 2. 방어 행동)\n숫자 입력 :");
@@ -38,33 +39,23 @@
                 switch (choose)
                 {
                     case 1:
-                        cameraChoice = input.SonarConsole(main.map);
-                        cam = main.map.Zones[cameraChoice-1];
-                        sonar.Scan(cameraChoice);
-                        if(cam.Light == true)
-                        {
-                            submarine.UsePower(Submarine.light);
-                        }
+                        cameraChoice = input.SonarConsole(main.map, main.sonar);
+                        main.sonar.Scan(cameraChoice);
+                        cam = main.map.Zones[cameraChoice - 1];
+                        main.LightOnCheck(submarine);
                         break;
                     case 2:
-                        cameraChoice = input.SonarConsole(main.map);
+                        cameraChoice = input.SonarConsole(main.map, main.sonar);
+
                         main.player.Depend(cameraChoice, submarine);
                         main.LightOnCam();
-                        foreach (Zone z in main.ligthOnCam)
-                        {
-                            submarine.UsePower(Submarine.light);
-                        }
+                        main.LightOnCheck(submarine);
                         break;
                     default:
                         Console.WriteLine("[ERROR] 다시 입력해 주세요\n");
                         continue;
                 }
                 main.monster.MoveMonsters(main.map, submarine);
-                //////////////
-                foreach(Zone z in main.map.Zones)
-                {
-                    Console.WriteLine(z.HasMonster);
-                }
                 cameraChoice = 0;
 
                 gameOver = main.player.ending(submarine, input);
@@ -82,6 +73,7 @@
                     ligthOnCam.Add(z);
                 }
             }
+            return;
         }
 
         public void LightOnCamPrint()
@@ -96,6 +88,14 @@
                 {
                     Console.Write(ligthOnCam[i].Name);
                 }
+            }
+        }
+
+        public void LightOnCheck(Submarine _sub)
+        {
+            foreach (Zone z in ligthOnCam)
+            {
+                _sub.UsePower(Submarine.light);
             }
         }
     }

@@ -12,26 +12,22 @@ namespace DeepEchoGame
         private readonly MonsterSpawner spawner;
         public List<Monster> monsterList;
         private Random ran;
-        private int turn = 0;
+        public int turn = 0;
         private bool comeReady = false;
 
         public MonsterManager(Map _map)
         {
             this.map = _map;
             this.spawner = new MonsterSpawner();
-
-            this.monsterList = spawner.Spawn(turn);
             this.ran = new Random();
         }
-
-        public int Turn {get { return turn; }}
         public void SetPlayerManager(PlayerManager _playerManager)
         {
             this.playerManager = _playerManager;
         }
         public void SpawnMonster(Map _map, Submarine _sub)
         {
-            if (monsterList.Count == 0)
+            while (monsterList == null || monsterList.Count == 0)
             {
                 turn++;
                 monsterList = spawner.Spawn(turn);
@@ -39,59 +35,67 @@ namespace DeepEchoGame
                 foreach (Monster i in monsterList)
                 {
                     i.Position = ran.Next(1, 6);
-                    i.monsterCam = ran.Next(0, 5);
+                    i.monsterCam = ran.Next(1, 6);
                 }
             }
         }
         public void MoveMonsters(Map _map, Submarine _sub)
         {
             SpawnMonster(_map, _sub);
+            for (int idx = 1; idx <= _map.Zones.Count; idx++)
+            {
+                _map.MonsterOut(idx);
+            }
             for (int i = monsterList.Count - 1; i >= 0; i--)
             {
-                var m = monsterList[i];
-                Zone cam = _map.Zones[m.monsterCam];  
+                Monster m = monsterList[i];
+                Zone cam = _map.Zones[m.monsterCam - 1];
 
                 if (m.Position > 1)
                 {
-                    map.MonsterIn(m.monsterCam);
                     m.Move();
-                    ///////////////
-                    Console.WriteLine("{0} moved to position {1}.", m.Name, m.Position);
+                    Console.WriteLine($"{m.Name}이(가) {m.Position}0m 이내에 들어왔다...");
                 }
                 else
                 {
-                    if(comeReady == false)
+                    if (playerManager.sonicAttackSuccess == true)
                     {
-                        Console.WriteLine($"[WARNING]{m.Name}이(가) 함선 앞까지 다가왔다");
-                        comeReady = true;
-                        continue;
+                        monsterList.Remove(m);
+                        Console.WriteLine($"[{cam.Name}] {m.Name}이(가) 음파를 맞고 처치되었습니다!\n");
+                        playerManager.sonicAttackSuccess = false;
+                        monsterList.Remove(m);
+                        comeReady = false;
                     }
-                    if (cam.Light == true)
+                    else if (cam.Light == true)
                     {
                         m.Attack(true);
                         m.Position = ran.Next(3, 6);
-                        map.MonsterOut(m.monsterCam);
                         Console.WriteLine($"[{cam.Name}] {m.Name}이(가) 불빛을 보고 후퇴했습니다!\n");
                         comeReady = false;
                     }
-                    else if (playerManager.sonicAttackSuccess == true)
+                    else if (comeReady == false)
                     {
-                        monsterList.Remove(m);
-                        map.MonsterOut(m.monsterCam);
-                        Console.WriteLine($"[{cam.Name}] {m.Name}이(가) 음파를 맞고 처치되었습니다!\n");
-                        playerManager.sonicAttackSuccess = false;
-                        comeReady = false;
+                        Console.WriteLine($"[WARNING]{m.Name}이(가) 함선 앞까지 다가왔다\n");
+                        comeReady = true;
+                        continue;
                     }
                     else
                     {
                         m.Attack(false);
                         _sub.damage(m.AttackPower);
                         monsterList.Remove(m);
-                        map.MonsterOut(m.monsterCam);
                         comeReady = false;
                     }
-
                 }
+            }
+            MonsterAlive(_map);
+        }
+
+        public void MonsterAlive(Map _map)
+        {
+            foreach (Monster m in monsterList)
+            {
+                _map.MonsterIn(m.monsterCam);
             }
         }
     }

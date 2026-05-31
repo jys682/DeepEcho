@@ -33,12 +33,12 @@ namespace DeepEchoGame
                     case 1:
                         if (cam.Light == true)
                         {
-                            Console.WriteLine($"[{cam.Name}] 이미 불이 켜져있습니다.");
+                            Console.WriteLine($"[{cam.Name}] 이미 불이 켜져있습니다.\n");
                             continue;
                         }
                         else
                         {
-                            Console.WriteLine($"[{cam.Name}] 불을 켰습니다.");
+                            Console.WriteLine($"[{cam.Name}] 불을 켰습니다.\n");
                             map.TurnOnLight(playercam);
                             roop = true;
                             break;
@@ -46,12 +46,12 @@ namespace DeepEchoGame
                     case 2:
                         if (cam.Light == false)
                         {
-                            Console.WriteLine($"[{cam.Name}] 이미 불이 꺼져있습니다.");
+                            Console.WriteLine($"[{cam.Name}] 이미 불이 꺼져있습니다.\n");
                             continue;
                         }
                         else
                         {
-                            Console.WriteLine($"[{cam.Name}] 불을 껐습니다.");
+                            Console.WriteLine($"[{cam.Name}] 불을 껐습니다.\n");
                             map.TurnOffLight(playercam);
                             roop = true;
                             break;
@@ -101,7 +101,7 @@ namespace DeepEchoGame
                 input.PowerDownEnding();
                 return true;
             }
-            else if (monsterMgr.Turn >= 10)
+            else if (monsterMgr.turn >= 10)
             {
                 input.TrueEnding();
                 return true;

@@ -59,13 +59,5 @@ namespace DeepEchoGame
             if (index > 0 && index <= Zones.Count)
                 zones[index - 1].sonicWaveOff();
         }
-
-        public Zone FindZone(int index) //scan할 때 작동
-        {
-            if (index > 0 && index <= Zones.Count)
-                return zones[index - 1];
-
-            return null;
-        }
     }
 }

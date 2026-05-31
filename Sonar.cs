@@ -13,17 +13,22 @@ namespace DeepEchoGame
             this.map = map;
         }
 
-        public void Scan(int index) //구역의 몬스터 존재 스캔
+        public bool Scan(int index) //구역의 몬스터 존재 스캔
         {
-            Zone target = map.FindZone(index);
+            if (index >= 1 && index <= map.Zones.Count)
+            {
+                Zone target = map.Zones[index - 1];
 
-            // 찾았을 때 출력
-            Console.WriteLine("=== 소나 스캔 ===");
+                Console.WriteLine("\n=== 소나 스캔 ===");
 
-            if (target.HasMonster)
-                Console.WriteLine($"\n[{target.Name}] : 위협적인 반응이 감지됩니다.");
+                if (target.HasMonster)
+                    Console.WriteLine($"[{target.Name}] : 위협적인 반응이 감지됩니다.");
+                else
+                    Console.WriteLine($"[{target.Name}] : 외부 반응이 느껴지지 않습니다.");
+                return true;
+            }
             else
-                Console.WriteLine($"\n[{target.Name}] : 외부 반응이 느껴지지 않습니다.");
+                return false;
         }
     }
 }

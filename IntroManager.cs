@@ -79,44 +79,45 @@ namespace DeepEchoGame
             Console.Write($"[LOG] 불 켜진 캠: ");
         }
 
-        public int SonarConsole(Map _map)
+        public int SonarConsole(Map _map, Sonar _sonar)
         {
-            Console.WriteLine("\n[LOG] 행동 가동 준비");
-            Console.WriteLine(".");
-            Thread.Sleep(1000);
-            Console.WriteLine(".");
-            Thread.Sleep(1000);
-            Console.WriteLine(@"       ┌───────┐       ");
-            Console.WriteLine(@"       │ cam1  │       ");
-            Console.WriteLine(@"       └───────┘       ");
-            Console.WriteLine(@"          ┌─┐          ");
-            Console.WriteLine(@"         ╱   ╲         ");
-            Console.WriteLine(@"        │     │        ");
-            Console.WriteLine(@"      ┌─┴─────┴─┐      ");
-            Console.WriteLine(@"┌────┐│ ┌─────┐ │┌────┐");
-            Console.WriteLine(@"│cam3││ │cam5 │ ││cam2│");
-            Console.WriteLine(@"└────┘│ └─────┘ │└────┘");
-            Console.WriteLine(@"     ─┤         │      ");
-            Console.WriteLine(@"      │    ┌┐   │      ");
-            Console.WriteLine(@"       ╲   ││  ╱       ");
-            Console.WriteLine(@"        ╲  └┘ ╱        ");
-            Console.WriteLine(@"         └───┘         ");
-            Console.WriteLine(@"       ┌───────┐       ");
-            Console.WriteLine(@"       │ cam4  │       ");
-            Console.WriteLine(@"       └───────┘       ");
-            while (true)
+            bool success;
+            int choose;
+            do
             {
+                Console.WriteLine("\n[LOG] 행동 가동 준비");
+                Console.WriteLine(".");
+                Thread.Sleep(1000);
+                Console.WriteLine(".");
+                Thread.Sleep(1000);
+                Console.WriteLine(@"       ┌───────┐       ");
+                Console.WriteLine(@"       │ cam1  │       ");
+                Console.WriteLine(@"       └───────┘       ");
+                Console.WriteLine(@"          ┌─┐          ");
+                Console.WriteLine(@"         ╱   ╲         ");
+                Console.WriteLine(@"        │     │        ");
+                Console.WriteLine(@"      ┌─┴─────┴─┐      ");
+                Console.WriteLine(@"┌────┐│ ┌─────┐ │┌────┐");
+                Console.WriteLine(@"│cam3││ │cam5 │ ││cam2│");
+                Console.WriteLine(@"└────┘│ └─────┘ │└────┘");
+                Console.WriteLine(@"     ─┤         │      ");
+                Console.WriteLine(@"      │    ┌┐   │      ");
+                Console.WriteLine(@"       ╲   ││  ╱       ");
+                Console.WriteLine(@"        ╲  └┘ ╱        ");
+                Console.WriteLine(@"         └───┘         ");
+                Console.WriteLine(@"       ┌───────┐       ");
+                Console.WriteLine(@"       │ cam4  │       ");
+                Console.WriteLine(@"       └───────┘       ");
                 Console.Write("\n어떤 카메라를 고를까? cam_ \n숫자만 입력 :");
-                bool success = int.TryParse(Console.ReadLine(), out int choose);
-                Zone zon = _map.FindZone(choose);
-
-                if (zon == null)
+                success = int.TryParse(Console.ReadLine(), out choose);
+                if (choose < 1 || choose > _map.Zones.Count || !success)
                 {
-                    Console.WriteLine("\n[ERROR] 존재하지 않는 구역입니다. 다시 입력해주세요");
-                    continue;
+                    Console.WriteLine("[ERROR] 다시 입력해 주세요\n");
+                    success = false;
                 }
-                return choose;
             }
+            while (!success);
+            return choose;
         }
 
         public void TrueEnding()
