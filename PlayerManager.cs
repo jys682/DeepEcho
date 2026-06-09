@@ -57,7 +57,7 @@ namespace DeepEchoGame
                             break;
                         }
                     case 3:
-                        if (submarine.Hp < 13)
+                        if (submarine.Power < Submarine.sonic)
                         {
                             Console.WriteLine("[WARNING] 음파 공격을 할 만큼 전력이 남아있지 않다 ");
                             continue;
@@ -101,7 +101,7 @@ namespace DeepEchoGame
                 input.HpDownEnding();
                 return true;
             }
-            else if (submarine.Power < 5)
+            else if (submarine.Power < Submarine.scan)
             {
                 input.PowerDownEnding();
                 return true;

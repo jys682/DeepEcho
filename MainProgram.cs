@@ -38,6 +38,11 @@
                 main.monster.SpawnMonster(main.map, submarine);
                 Console.Write("\n어떤 행동을 할까? (1. 소나 스캔, 2. 방어 행동)\n숫자 입력 :");
                 bool success = int.TryParse(Console.ReadLine(), out int choose);
+                if (!success)
+                {
+                    Console.WriteLine("[ERROR] 숫자로 입력해 주세요\n");
+                    continue;
+                }
                 switch (choose)
                 {
                     case 1:
@@ -48,7 +53,7 @@
                         main.LightOnCheck(submarine);
                         break;
                     case 2:
-                        if(submarine.Hp < 10)
+                        if(submarine.Power < Submarine.light)
                         {
                             Console.WriteLine("[WARNING] 방어 행동을 할 만큼 전력이 남아있지 않다 ");
                             continue;
@@ -104,6 +109,22 @@
             foreach (Zone z in ligthOnCam)
             {
                 _sub.UsePower(Submarine.light);
+            }
+        }
+
+        public IntroManager input
+        {
+            get => default;
+            set
+            {
+            }
+        }
+
+        public Submarine submarine
+        {
+            get => default;
+            set
+            {
             }
         }
     }

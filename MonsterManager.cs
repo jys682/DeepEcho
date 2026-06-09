@@ -60,7 +60,6 @@ namespace DeepEchoGame
                 {
                     if (playerManager.sonicAttackSuccess == true)
                     {
-                        monsterList.Remove(m);
                         Console.WriteLine($"[{cam.Name}] {m.Name}이(가) 음파를 맞고 처치되었습니다!\n");
                         playerManager.sonicAttackSuccess = false;
                         monsterList.Remove(m);
